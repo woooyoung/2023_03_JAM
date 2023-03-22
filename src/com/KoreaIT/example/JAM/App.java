@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import com.KoreaIT.example.JAM.util.DBUtil;
 import com.KoreaIT.example.JAM.util.SecSql;
+import com.KoreaIT.example.JAM.util.util;
 
 public class App {
 	public void start() {
@@ -80,6 +81,31 @@ public class App {
 			int id = DBUtil.insert(conn, sql);
 
 			System.out.println(id + "번 글이 생성 되었습니다");
+
+		} else if (cmd.startsWith("article detail ")) {
+			int id = Integer.parseInt(cmd.split(" ")[2]);
+
+			System.out.println("==게시물 상세보기==");
+
+			SecSql sql = new SecSql();
+			sql.append("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?", id);
+
+			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
+
+			if (articleMap.isEmpty()) {
+				System.out.println(id + "번 글은 존재하지 않습니다");
+				return 0;
+			}
+
+			Article article = new Article(articleMap);
+
+			System.out.println("번호 : " + article.id);
+			System.out.println("작성날짜 : " + util.getNowDateTimeStr(article.regDate));
+			System.out.println("수정날짜 : " + util.getNowDateTimeStr(article.updateDate));
+			System.out.println("제목 : " + article.title);
+			System.out.println("내용 : " + article.body);
 
 		} else if (cmd.startsWith("article delete ")) {
 			int id = Integer.parseInt(cmd.split(" ")[2]);
