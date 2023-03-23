@@ -1,22 +1,9 @@
 package com.KoreaIT.example.JAM.controller;
 
-import java.sql.Connection;
-import java.util.Scanner;
-
 import com.KoreaIT.example.JAM.util.DBUtil;
 import com.KoreaIT.example.JAM.util.SecSql;
 
-public class MemberController {
-	private Connection conn;
-	private Scanner sc;
-
-	public void setConn(Connection conn) {
-		this.conn = conn;
-	}
-
-	public void setScanner(Scanner sc) {
-		this.sc = sc;
-	}
+public class MemberController extends Controller {
 
 	public void doJoin(String cmd) {
 		String loginId = null;
