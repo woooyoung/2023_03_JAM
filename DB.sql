@@ -22,17 +22,42 @@ CREATE TABLE `member`(
     `name` CHAR(100) NOT NULL
 );
 
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# `member` 테스트데이터 생성
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = '김철수';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = '홍길동';
+
 # article 테스트데이터 생성
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+memberId = 1,
 title = CONCAT('제목 ',RAND()),
 `body` = CONCAT('내용 ',RAND());
 
 SELECT * 
 FROM article;
 
-# `member` 테스트데이터 생성
+SELECT * 
+FROM `member`;
+
+DESC article;
+
+######################################################################
+
+
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
@@ -40,22 +65,13 @@ loginId = CONCAT('TestId ',RAND()),
 loginPw = CONCAT('TestPw ',RAND()),
 `name` = CONCAT('TestName ',RAND());
 
-SELECT * 
-FROM `member`;
-
-INSERT INTO `member`
+INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = 'test1',
-loginPw = 'test1',
-`name` = 'test1';
+memberId = 1,
+title = CONCAT('TestTitle ',RAND()),
+`body` = CONCAT('TestBody ',RAND());
 
-SELECT COUNT(*) >= 1
-FROM article
-WHERE id = 1;
 
-SELECT COUNT(*) > 0
-FROM `member`
-WHERE loginId = 'test2';
 
-INSERT INTO article SET regDate = NOW() , updateDate = NOW() , title = 'aedsfg' , `body = 'cvbnawter';
+
